@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 use lib '/home/u9221/share/perl5/';
-use Test::More tests => 12;
+use Test::More tests => 11;
 use CudeInterface; 
 
 use_ok("CudeInterface");
