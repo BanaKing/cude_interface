@@ -47,8 +47,8 @@ sub update {
 	my $name_u = shift;
 	my $work_place_id_u = shift;
 	my @set ;
-	return "WRONG_VALUE" unless($id_u =~  m/\d{1,11}/ ) 
-}
+	return "WRONG_VALUE" unless ($id_u =~  m/\d{1,11}/ ) ;
+
 
 	if ($name_u =~ m /.{3,50}/ ){
 		push @set, "name='$name_u'\n";
@@ -64,9 +64,9 @@ sub update {
 	foreach my $one_set (@set){
 		if ($one_set){
 			my $sql = "
-        UPDATE telephone_book 
-		  	SET $one_set
-		  	WHERE id=? ";
+        			UPDATE telephone_book 
+		  		SET $one_set
+		  		WHERE id=? ";
 			my $sth =$dbh -> prepare ("$sql")
 				or die "WRONG_PARAMS";
 			$sth->execute($id_u)
