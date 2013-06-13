@@ -26,15 +26,15 @@ my $got_show;
 
 $got_show= &show($id);
 $got_show = "@{$got_show->[-1]}[1..3]"; 
-is_deeply ($got_show ,$expected_show, "function show() run right");
+is_deeply ($got_show, $expected_show, "function show() run right");
 
 $got_show = &show($name);
 $got_show = "@{$got_show->[-1]}[1..3]"; 
-is_deeply ($got_show ,$expected_show, "function show() run right");
+is_deeply ($got_show, $expected_show, "function show() run right");
 
 $got_show = &show();
 $got_show = "@{$got_show->[-1]}[1..3]";
-is_deeply ($got_show ,$expected_show, "function show() run right");
+is_deeply ($got_show, $expected_show, "function show() run right");
 }
 
 #Проверка update()
