@@ -47,14 +47,16 @@ sub update {
 	my $name_u = shift;
 	my $work_place_id_u = shift;
 	my @set ;
+	return "WRONG_VALUE" unless($id_u =~  m/\d{1,11}/ ) 
+}
 
-	if ($id_u =~  m/\d{1,11}/, $name_u =~ m /.{3,50}/ ){
+	if ($name_u =~ m /.{3,50}/ ){
 		push @set, "name='$name_u'\n";
 	}
-	if ($id_u =~  m/\d{1,11}/, $phone_u =~ m/\.{3,15}/) {
+	if ($phone_u =~ m/\.{3,15}/) {
 		push @set, "phone='$phone_u'\n";
 	}
-	if ($id_u =~  m/\d{1,11}/, $work_place_id_u =~ m/\d{1,11}/){
+	if ($work_place_id_u =~ m/\d{1,11}/){
 		push @set, "work_place_id='$work_place_id_u'\n";
 	}
 
