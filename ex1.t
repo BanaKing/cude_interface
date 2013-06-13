@@ -27,7 +27,7 @@ ok (&insert($phone, $name, $work_place_id) eq "WRONG_PARAMS", "function insert()
 {
 $id=81;
 ok (&delete_colum($id) eq "1", "function delete_colum() run right ");
-$id=asd;
+$id="asd";
 ok (&delete_colum($id) eq "WRONG_VALUE", "function delete_colum() run with WRONG_VALUE ");
 }
 
