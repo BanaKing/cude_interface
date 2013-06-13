@@ -1,12 +1,20 @@
 #!usr/bin/perl 
+
 use DBI;
+package CudeInterface;
+
+use Exporter ();
+@ISA = "Exporter";
+@EXPORT = qw (&delete_colum &update &show &insert &insert_id);
+
 # Переменные для соединения с базой 
 my $database = "u9221_main";
 my $user = "u9221_main";
-my $password = "********";
+my $password = "Z6YQ8vHS";
 my $host = "localhost";
 my $data_source = "DBI:mysql:database=$database;host=$host";
 
+#Переменные для обращения к базе
 my $id = '';
 my $name = '';
 my $phone = '';
@@ -17,13 +25,13 @@ my $from_file = '';
 
 #Подключение к серверу MySQL 
 my $dbh = DBI ->connect ($data_source, $user, $password)
-  or die "Not conneted";
+	or die "Not conneted";
 
 
 # Отключение от сервера 
-$dbh -> disconnect
-	or die "Отсоединение не выполнdено: $DBI::errstr\n";
-exit;
+#$dbh -> disconnect
+#	or die "Отсоединение не выполнdено: $DBI::errstr\n";
+#exit;
 
 sub delete_colum {
 
@@ -34,7 +42,7 @@ sub delete_colum {
 	if ($id_d =~ m/\d{1,11}/){
 		my $sth = $dbh -> prepare("$sql")
 			or die "WRONG_VALUE";
-		$sth->execute($id)
+		$sth->execute($id_d)
 			or die "WRONG_VALUE";
 		return 1;
 	}
@@ -49,11 +57,10 @@ sub update {
 	my @set ;
 	return "WRONG_VALUE" unless ($id_u =~  m/\d{1,11}/ ) ;
 
-
 	if ($name_u =~ m /.{3,50}/ ){
 		push @set, "name='$name_u'\n";
 	}
-	if ($phone_u =~ m/\.{3,15}/) {
+	if ($phone_u =~ m/.{3,15}/) {
 		push @set, "phone='$phone_u'\n";
 	}
 	if ($work_place_id_u =~ m/\d{1,11}/){
@@ -63,10 +70,9 @@ sub update {
 	
 	foreach my $one_set (@set){
 		if ($one_set){
-			my $sql = "
-        			UPDATE telephone_book 
-		  		SET $one_set
-		  		WHERE id=? ";
+			my $sql = "UPDATE telephone_book 
+			SET $one_set
+			WHERE id=? ";
 			my $sth =$dbh -> prepare ("$sql")
 				or die "WRONG_PARAMS";
 			$sth->execute($id_u)
@@ -92,16 +98,11 @@ sub show {
 	}
 
 	my $sql ="
-    SELECT * 
+		SELECT * 
 		FROM telephone_book
 		WHERE $where ";
 	my $str = $dbh->selectall_arrayref("$sql", undef)
 		or die "WRONG_VALUE\n";
-	printf "%-4s%-15s%-20s%s\n", "ID", "NAME", "PHONE", "WORK PLACE",;
-	foreach  (@$str) {
-		printf "%-4s%-15s%-20s%s\n", @$_;
-	}
-	return 1;
 }
 
 sub insert {
@@ -127,16 +128,19 @@ sub insert {
 			$phone_i = $3;
 			$work_place_id_i = $4;
 
-			my $sql = "
-        INSERT INTO telephone_book (name,phone,work_place_id)
+			my $sql = "INSERT INTO telephone_book (name,phone,work_place_id)
 				VALUES (?,?,?)";
 			my $sth =$dbh -> prepare ("$sql")
 				or die "WRONG_PARAMS";
 			$sth->execute($name_i,$phone_i,$work_place_id_i)
 				or die "WRONG_PARAMS";
-		}
-		else {return "WRONG_PARAMS";}
+			}
+			else {return "WRONG_PARAMS";}
 	}
 	return 1;
 }
-return 1;
+
+sub insert_id {
+	my $last_id = $dbh->{mysql_insertid};
+}
+1;
