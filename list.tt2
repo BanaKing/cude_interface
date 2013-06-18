@@ -1,0 +1,9 @@
+ [% META title = 'Telephone Book List' -%]
+ 
+</table>
+[% IF connect_1 %]<p>[% connect_1 %]</p> [% END %] 
+<form name="table" method=POST action="table">
+<input type="text" name="id" value="">
+<input type="submit" value="Do something!">
+</form>
+[% IF result %]<p>[% result %]</p> [% END %] 
